@@ -87,4 +87,4 @@ for(i in 1:length(files)){
 summary(iwate)
 
 setwd(dir_save)
-write.csv(iwate, "iwate2020.csv", fileEncoding = "CP932")
+write.csv(iwate, "catch_iwa2020.csv", fileEncoding = "CP932")
