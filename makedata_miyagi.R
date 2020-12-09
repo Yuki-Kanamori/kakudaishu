@@ -91,4 +91,4 @@ test = test %>% dplyr::rename(catch = "日別水揚量(キロ)") %>% filter(catc
 unique(miya$魚種コード)
 
 setwd(dir_save)
-write.csv(miya, "miya.csv", fileEncoding = "CP932")
+write.csv(miya, "catch_miya2020.csv", fileEncoding = "CP932")
