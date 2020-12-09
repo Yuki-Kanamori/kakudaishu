@@ -100,4 +100,4 @@ summary(iba)
 unique(iba$species)
 
 setwd(dir_save)
-write.csv(iba, "iba.csv", fileEncoding = "CP932")
+write.csv(iba, "catch_iba2020.csv", fileEncoding = "CP932")
