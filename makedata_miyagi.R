@@ -81,13 +81,11 @@ for(i in 1:length(files)){
   }
 }
 
-summary(miya)
+summary(miya) #catch < 0がある!!!
 test = miya
 colnames(test)
 test = test %>% dplyr::rename(catch = "日別水揚量(キロ)") %>% filter(catch < 0)
 
-
-test = miya[, 4 < 0]
 
 
 unique(miya$魚種コード)
