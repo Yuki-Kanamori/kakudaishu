@@ -29,7 +29,6 @@ hankana2zenkana <- function(x){
 }
 
 files2 = hankana2zenkana(files)
-files2[2]
 
 fuk = NULL
 for(i in 1:length(files2)){
@@ -81,6 +80,7 @@ summary(fuk)
 
 #catchがnumericでない
 fuk = fuk %>% mutate(catch = as.numeric(as.character(fuk$catch)))
+summary(fuk)
 
 setwd(dir_save)
 write.csv(fuk, "catch_fuk2020.csv", fileEncoding = "CP932")
