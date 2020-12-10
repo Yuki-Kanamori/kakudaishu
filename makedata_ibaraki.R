@@ -101,7 +101,7 @@ summary(iba)
 iba$catch = ifelse(iba$catch < 0, 0 , iba$catch)
 summary(iba)
 
-# ファイルがでかくなるので，csvにせず，そのまま作図に進む事をおすすめする(25MB)
+# ファイルがでかくなるので，csvにせず，そのまま作図に進む事をおすすめする(3.9MB)
 # setwd(dir_save)
 # write.csv(iba2, "catch_iba2020.csv", fileEncoding = "CP932")
 
