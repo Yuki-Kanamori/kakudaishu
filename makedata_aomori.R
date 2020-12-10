@@ -48,5 +48,7 @@ for(i in 4:length(files)){
 }
 
 summary(ao)
-setwd(dir_save)
-write.csv(ao, "catch_ao2020.csv")
+
+# 
+# setwd(dir_save)
+# write.csv(ao, "catch_ao2020.csv")
