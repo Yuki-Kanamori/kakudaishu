@@ -9,7 +9,6 @@ path = dir_data
 files = list.files(path)
 
 iba = NULL
-
 for(i in 1:length(files)){
   for(j in 1990:2019){
     data = read.xlsx(paste0(files[i]), sheet = paste0(j), startRow = 3) 
@@ -97,7 +96,17 @@ for(i in 1:length(files)){
   
 }
 summary(iba)
-unique(iba$species)
+
+#catch < 0がある
+check = iba %>% filter(catch < 0)
+#carch < 0は()が付いた値になっていたから
+check$catch = c(0.8, 0, 1, 19.7, 9.4, 21.2, 1.1, 1.5, 0)
+
+iba_true = iba %>% filter(catch > 0)
+
+iba2 = rbind(iba_true, check)
 
 setwd(dir_save)
-write.csv(iba, "catch_iba2020.csv", fileEncoding = "CP932")
+write.csv(iba2, "catch_iba2020.csv", fileEncoding = "CP932")
+
+
