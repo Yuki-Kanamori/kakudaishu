@@ -24,7 +24,8 @@ for(i in 1:length(files)){
     data = data[1:nrow(tag), ] %>% 
       gather(key = time, value = catch, 5:ncol(data)) %>%
       mutate(year = as.numeric(str_sub(time, 1, 4)), month = as.numeric(str_sub(time, 6, 7)), file = paste0(files[i]), species = "ミズダコ") %>% 
-      dplyr::rename(分類名 = 魚種)
+      dplyr::rename(分類名 = 魚種) %>% 
+      select(-time)
     
     iwate = rbind(iwate, data)
   }else{
@@ -32,7 +33,8 @@ for(i in 1:length(files)){
       tag = data.frame(tf = is.na(data[, 1])) %>% filter(tf == "FALSE")
       data = data[1:nrow(tag), ] %>% 
         gather(key = time, value = catch, 5:ncol(data)) %>%
-        mutate(year = as.numeric(str_sub(time, 1, 4)), month = as.numeric(str_sub(time, 6, 7)), file = paste0(files[i]), species = "マダコ")
+        mutate(year = as.numeric(str_sub(time, 1, 4)), month = as.numeric(str_sub(time, 6, 7)), file = paste0(files[i]), species = "マダコ") %>%
+        select(-time)
       
       iwate = rbind(iwate, data)
     }else{
@@ -40,7 +42,8 @@ for(i in 1:length(files)){
       data = data[1:nrow(tag), ] %>% 
         gather(key = time, value = catch, 4:ncol(data)) %>%
         mutate(year = as.numeric(str_sub(time, 1, 4)), month = as.numeric(str_sub(time, 6, 7)), file = paste0(files[i])) %>% 
-        mutate(分類名 = NA)
+        mutate(分類名 = NA) %>%
+        select(-time)
       
       # 種名を入れる
       # %in%だとうまく引っかけられなかったので，stringrを使う
@@ -88,3 +91,7 @@ summary(iwate)
 
 setwd(dir_save)
 write.csv(iwate, "catch_iwa2020.csv", fileEncoding = "CP932")
+
+# catch < 0を取り出す
+check = iwate %>% filter(catch < 0)
+write.csv(check, "catch_error_iwate.csv", fileEncoding = "CP932")
