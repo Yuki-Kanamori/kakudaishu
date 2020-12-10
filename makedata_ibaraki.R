@@ -97,16 +97,12 @@ for(i in 1:length(files)){
 }
 summary(iba)
 
-#catch < 0がある
-check = iba %>% filter(catch < 0)
-#carch < 0は()が付いた値になっていたから
-check$catch = c(0.8, 0, 1, 19.7, 9.4, 21.2, 1.1, 1.5, 0)
+# catch < 0は0とする
+iba$catch = ifelse(iba$catch < 0, 0 , iba$catch)
+summary(iba)
 
-iba_true = iba %>% filter(catch > 0)
-
-iba2 = rbind(iba_true, check)
-
-setwd(dir_save)
-write.csv(iba2, "catch_iba2020.csv", fileEncoding = "CP932")
+# ファイルがでかくなるので，csvにせず，そのまま作図に進む事をおすすめする(25MB)
+# setwd(dir_save)
+# write.csv(iba2, "catch_iba2020.csv", fileEncoding = "CP932")
 
 
