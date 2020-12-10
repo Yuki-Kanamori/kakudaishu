@@ -89,9 +89,10 @@ for(i in 1:length(files)){
 }
 summary(iwate)
 
-setwd(dir_save)
-write.csv(iwate, "catch_iwa2020.csv", fileEncoding = "CP932")
+# catch < 0は0とする
+iwate$catch = ifelse(iwate$catch < 0, 0, iwate$catch)
+summary(iwate)
 
-# catch < 0を取り出す
-check = iwate %>% filter(catch < 0)
-write.csv(check, "catch_error_iwate.csv", fileEncoding = "CP932")
+# ファイルがでかくなるので，csvにせず，そのまま作図に進む事をおすすめする(25MB)
+# setwd(dir_save)
+# write.csv(iwate, "catch_iwa2020.csv", fileEncoding = "CP932")
