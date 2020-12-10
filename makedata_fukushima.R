@@ -82,5 +82,5 @@ summary(fuk)
 fuk = fuk %>% mutate(catch = as.numeric(as.character(fuk$catch)))
 summary(fuk)
 
-setwd(dir_save)
-write.csv(fuk, "catch_fuk2020.csv", fileEncoding = "CP932")
+# setwd(dir_save)
+# write.csv(fuk, "catch_fuk2020.csv", fileEncoding = "CP932")
