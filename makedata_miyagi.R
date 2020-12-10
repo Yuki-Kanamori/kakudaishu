@@ -81,14 +81,11 @@ for(i in 1:length(files)){
   }
 }
 
-summary(miya) #catch < 0がある!!!
-test = miya
-colnames(test)
-test = test %>% dplyr::rename(catch = "日別水揚量(キロ)") %>% filter(catch < 0)
+summary(miya)
+
+# catch < 0はそのまま負の値として扱う
 
 
-
-unique(miya$魚種コード)
-
-setwd(dir_save)
-write.csv(miya, "catch_miya2020.csv", fileEncoding = "CP932")
+# ファイルがでかくなるので，csvにせず，そのまま作図に進む事をおすすめする(46MB)
+# setwd(dir_save)
+# write.csv(miya, "catch_miya2020.csv", fileEncoding = "CP932")
