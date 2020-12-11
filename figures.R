@@ -8,6 +8,7 @@ dir_save = "/Users/Yuki/Dropbox/業務/拡大種/2020/output"
 # 
 # 魚種名がうまく引っ掛けられない時はunique()で魚種名リストを出してコピペする
 # 総じて日本語を扱うのが苦手なので，適宜英語表記に変えながら処理（group_byは特に上手くいかなくなることが多い）
+# あまりにもダメな時はRをrestart
 # 
 
 unique(ao$species)
@@ -47,7 +48,8 @@ pref = rbind(pref, fuk_a)
 
 iba_a = iba %>% filter(species == "アカガレイ")
 summary(iba_a)
-iba_a = iba_a %>% group_by(year) %>% summarize(total = sum(catch)) %>% mutate(pref = "茨城")
+iba_a = ddply(iba_a, .(year), summarize, total = sum(catch))
+iba_a = iba_a %>% mutate(pref = "茨城")
 pref = rbind(pref, iba_a)
 
 summary(pref)
@@ -56,24 +58,26 @@ levels(pref$pref)
 pref$pref = factor(pref$pref, levels = c("青森", "岩手", "宮城", "福島", "茨城"))
 levels(pref$pref)
 
-g = ggplot(pref, aes(x = year, y = total))
+g = ggplot(pref, aes(x = year, y = total/1000))
 p = geom_point(size = 5)
 l = geom_line(size = 1)
-lab = labs(x = "年級", y = "雌親魚量（トン）")
+lab = labs(x = "年", y = "漁獲量（トン）")
+f = facet_wrap(~ pref, ncol = 2, scales = "free")
 th = theme(panel.grid.major = element_blank(),
            panel.grid.minor = element_blank(),
-           axis.text.x = element_text(size = rel(1.8), angle = 90, colour = "black"),
-           axis.text.y = element_text(size = rel(1.8), colour = "black"),
-           axis.title.x = element_text(size = rel(2)),
-           axis.title.y = element_text(size = rel(2)),
+           axis.text.x = element_text(size = rel(1.5), angle = 90, colour = "black"),
+           axis.text.y = element_text(size = rel(1.5), colour = "black"),
+           axis.title.x = element_text(size = rel(1.5)),
+           axis.title.y = element_text(size = rel(1.5)),
            legend.title = element_blank(),
-           strip.text.x = element_text(size = rel(1.8)),
+           strip.text.x = element_text(size = rel(1.5)),
            legend.position = c(0.1, 0.8),
            legend.background = element_rect(fill = "white", size = 0.4, linetype = "solid", colour = "black"))
-oya = g+l+p+lab+theme_bw(base_family = "HiraKakuPro-W3")+th+scale_x_continuous(breaks=seq(1996, 2017, by = 2), expand = c(0, 0.5))+scale_y_continuous(expand = c(0,0),limits = c(0, 6000))
+fig_pref = g+l+p+f+lab+theme_bw(base_family = "HiraKakuPro-W3")+th+scale_x_continuous(breaks=seq(1990, 2019, by = 2), expand = c(0, 0.5))
+#+scale_y_continuous(expand = c(0,0),limits = c(0, 520))
 
-fig14 = grid.arrange(ko, oya, ncol = 1)
-ggsave(file = "fig14.png", plot = fig14, units = "in", width = 11.69, height = 8.27)
+setwd(dir_save)
+ggsave(file = "fig_pref.png", plot = fig_pref, units = "in", width = 11.69, height = 8.27)
 
 
 
