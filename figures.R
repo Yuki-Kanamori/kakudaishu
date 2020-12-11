@@ -66,12 +66,12 @@ lab = labs(x = "年", y = "漁獲量（トン）")
 f = facet_wrap(~ pref, ncol = 2, scales = "free")
 th = theme(panel.grid.major = element_blank(),
            panel.grid.minor = element_blank(),
-           axis.text.x = element_text(size = rel(1.5), angle = 90, colour = "black"),
-           axis.text.y = element_text(size = rel(1.5), colour = "black"),
+           axis.text.x = element_text(size = rel(1.8), angle = 90, colour = "black"),
+           axis.text.y = element_text(size = rel(1.8), colour = "black"),
            axis.title.x = element_text(size = rel(1.5)),
            axis.title.y = element_text(size = rel(1.5)),
            legend.title = element_blank(),
-           strip.text.x = element_text(size = rel(1.5)),
+           strip.text.x = element_text(size = rel(1.8)),
            legend.position = c(0.1, 0.8),
            legend.background = element_rect(fill = "white", size = 0.4, linetype = "solid", colour = "black"))
 fig_pref = g+l+p+f+lab+theme_bw(base_family = "HiraKakuPro-W3")+th+scale_x_continuous(breaks=seq(1990, 2019, by = 2), expand = c(0, 0.5))
@@ -142,3 +142,14 @@ fig_method = g+b+lab+c+theme_bw(base_family = "HiraKakuPro-W3")+th+scale_x_conti
 
 setwd(dir_save)
 ggsave(file = "fig_method.png", plot = fig_method, units = "in", width = 11.69, height = 8.27)
+
+
+
+
+# check ---------------------------------------------------------
+c = NULL
+for(i in 1:length(pre)){
+  data = get(pre[i]) %>% mutate(pref = paste0(pre[i])) 
+  data = ddply(data, .(pref, method2), summarize, total = sum(catch))
+  c = rbind(c, data)
+}
