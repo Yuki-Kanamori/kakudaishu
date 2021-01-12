@@ -27,15 +27,15 @@ iba_a = iba %>% filter(species == "アカガレイ") %>% dplyr::rename(method
 pref = NULL
 
 summary(ao_a)
-ao1 = ao_a %>% group_by(year) %>% summarise(total = sum(catch)) %>% mutate(pref = "青森")
+ao1 = ao_a %>% dplyr::group_by(year) %>% dplyr::summarise(total = sum(catch)) %>% mutate(pref = "青森")
 pref = rbind(pref, ao1)
 
 summary(iwa_a)
-iwa1 = iwa_a %>% group_by(year) %>% summarize(total = sum(catch)) %>% mutate(pref = "岩手")
+iwa1 = iwa_a %>% dplyr::group_by(year) %>% dplyr::summarize(total = sum(catch)) %>% mutate(pref = "岩手")
 pref = rbind(pref, iwa1)
 
 summary(miya_a)
-miya1 = miya_a %>% group_by(year) %>% summarize(total = sum(catch)) %>% mutate(pref = "宮城")
+miya1 = miya_a %>% dplyr::group_by(year) %>% dplyr::summarize(total = sum(catch)) %>% mutate(pref = "宮城")
 pref = rbind(pref, miya1)
 
 summary(fuk_a)
